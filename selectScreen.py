@@ -50,7 +50,7 @@ def gameLoop():
                 # Set the x, y positions of the mouse click
                 x, y = event.pos
 
-                print ("X= %s || Y= %s", x, y)
+                print ("X= %s || Y= %s" % (x,y))
 
                 #Top-Left Rectangle Click
                 if x < 400 and y < 300:
