@@ -12,8 +12,8 @@ colors = {"white": (255, 255, 255),
 screenHeight = 600
 screenWith = 800
 resolution = (screenWith, screenHeight)
-#gameDisplay = pygame.display.set_mode(resolution,pygame.FULLSCREEN)
-gameDisplay = pygame.display.set_mode(resolution)
+gameDisplay = pygame.display.set_mode(resolution,pygame.FULLSCREEN)
+#gameDisplay = pygame.display.set_mode(resolution)
 
 fps = 30
 pi = 22/7.0
