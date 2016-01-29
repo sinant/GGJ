@@ -2,3 +2,5 @@
 import pygame, sys
 
 pygame.init()
+
+# Merhaba YAVŞAK
