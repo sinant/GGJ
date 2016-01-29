@@ -12,8 +12,8 @@ colors = {"white": (255, 255, 255),
 screenHeight = 600
 screenWith = 800
 resolution = (screenWith, screenHeight)
-gameDisplay = pygame.display.set_mode(resolution,pygame.FULLSCREEN)
-#gameDisplay = pygame.display.set_mode(resolution)
+#gameDisplay = pygame.display.set_mode(resolution ,pygame.FULLSCREEN)
+gameDisplay = pygame.display.set_mode(resolution)
 
 fps = 30
 pi = 22/7.0
@@ -57,6 +57,9 @@ def isInside(x,y,poly):
 
     return inside
 
+def returnCharacter(characterName):
+    return characterName
+
 def gameLoop():
 
     gameExit = False
@@ -87,16 +90,17 @@ def gameLoop():
 
                 if isInside(x,y,topTriangle):
                     print ("Inside top triangle")
+                    return returnCharacter("Inside top triangle")
                 if isInside(x,y,bottomTriangle):
                     print("Inside bottom triangle")
+                    return returnCharacter("Inside bottom triangle")
                 if isInside(x,y,leftTriangle):
                     print("Inside left triangle")
+                    return returnCharacter("Inside left triangle")
                 if isInside(x,y,rightTriangle):
                     print("Inside right triangle")
+                    return returnCharacter("Inside right triangle")
         pygame.display.update()
 
 
 gameLoop()
-
-pygame.quit()
-quit()

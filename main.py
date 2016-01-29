@@ -1,7 +1,16 @@
 #sinan talebi
 import pygame, sys
 
-print (3)
+import tableSelectScreen
 
+def main():
+    characterName = tableSelectScreen.gameLoop()
+    print (characterName)
+
+    while True:
+        pass
+
+if __name__ == '__main__':
+    main()
 
 #<=3
