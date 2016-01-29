@@ -1,6 +1,6 @@
 #sinan talebi
 import pygame, sys
 
-pygame.init()
+print (3)
 
 # Merhaba YAVŞAK
