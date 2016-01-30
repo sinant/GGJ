@@ -93,7 +93,7 @@ class Triger(pygame.sprite.Sprite):
             self.tryChance -= 1
             print(self.tryChance)
             if self.tryChance <= 0:
-                level.lose()
+                level.youLose()
 
 
 
@@ -103,20 +103,21 @@ class Level(object):
         """ Constructor. Pass in a handle to player. Needed for when moving platforms
             collide with the player. """
         self.platform_list = pygame.sprite.Group()
-
+        self.buttonCount = 0
         # Background image
         self.background = None
         self.createButton(900, 50, 40, 40)
         self.timeS = time.time()
+        self.win = False
+        self.lose = False
+
     def update(self):
         """ Update everything in this level."""
         if time.time() - self.timeS >= 2:
 
             self.createButton(900, 50, 40, 40)
             self.timeS = time.time()
-
         self.platform_list.update()
-
 
     def draw(self, screen):
         """ Draw everything on this level. """
@@ -128,14 +129,23 @@ class Level(object):
         self.platform_list.draw(screen)
 
     def createButton(self, posX, posY, width, height):
-        type = random.choice(("UP", "DOWN", "LEFT", "RIGHT"))
-        button = Button(posX, posY, width, height, type)
-        self.platform_list.add(button)
 
-    def lose(self):
-        print("YOU LOSE!!!!!!!")
-
+        if self.buttonCount <= 10:
+            type = random.choice(("UP", "DOWN", "LEFT", "RIGHT"))
+            button = Button(posX, posY, width, height, type)
+            self.platform_list.add(button)
+            self.buttonCount += 1
+        else :
+            timeS = time.time()
+            while time.time() - timeS < 5:
+                pass
+            self.youWin()
+    def youLose(self):
+        self.lose = True
+    def youWin(self):
+        self.win = True
 level = Level()
+
 def GameLoop():
 
 
@@ -148,7 +158,6 @@ def GameLoop():
 
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 gameExit = True
-
 
             if event.type == pygame.KEYDOWN:
 
@@ -168,12 +177,12 @@ def GameLoop():
         level.update()
         trigger.update()
 
+        if level.win:
+            return True
+        if level.lose:
+            return False
+
         # trigger.draw(gameDisplay)
         level.draw(gameDisplay)
         pygame.display.update()
         clock.tick(fps)
-
-GameLoop()
-
-
-pygame.quit()

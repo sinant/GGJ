@@ -62,7 +62,7 @@ class Level(object):
     def __init__(self):
 
         self.platform_list = pygame.sprite.Group()
-
+        self.win = False
         # Background image
         self.background = pygame.image.load("in_background.png")
         self.hand = pygame.image.load("in_hand.png")
@@ -75,10 +75,10 @@ class Level(object):
                 win = False
         print(win)
         if win is True:
-            self.win()
+            self.youWin()
 
-    def win(self):
-        print ("WON")
+    def youWin(self):
+        self.win = True
 
     def draw(self, screen):
         """ Draw everything on this level. """
@@ -134,6 +134,8 @@ def gameLoop():
     while not gameExit:
         gameDisplay.fill(colors["white"])
 
+        if level.win is True:
+            return True
 
         for event in pygame.event.get():
 
@@ -151,7 +153,4 @@ def gameLoop():
         pygame.display.update()
 
 
-gameLoop()
 
-pygame.quit()
-quit()

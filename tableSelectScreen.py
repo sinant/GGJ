@@ -89,18 +89,15 @@ def gameLoop():
                 print ("X= %s || Y= %s" % (x,y))
 
                 if isInside(x,y,topTriangle):
-                    print ("Inside top triangle")
-                    return returnCharacter("Inside top triangle")
+                    return 1
                 if isInside(x,y,bottomTriangle):
-                    print("Inside bottom triangle")
-                    return returnCharacter("Inside bottom triangle")
+                    return 2
                 if isInside(x,y,leftTriangle):
-                    print("Inside left triangle")
-                    return returnCharacter("Inside left triangle")
+                    return 3
                 if isInside(x,y,rightTriangle):
-                    print("Inside right triangle")
-                    return returnCharacter("Inside right triangle")
+                    return 4
         pygame.display.update()
-
+    pygame.quit()
+    quit()
 
 gameLoop()
