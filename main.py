@@ -5,7 +5,7 @@ import tableSelectScreen
 
 def main():
     characterName = tableSelectScreen.gameLoop()
-    print (characterName)
+    print(characterName)
 
     while True:
         pass
