@@ -64,8 +64,8 @@ class Level(object):
         self.platform_list = pygame.sprite.Group()
 
         # Background image
-        self.background = None
-
+        self.background = pygame.image.load("in_background.png")
+        self.hand = pygame.image.load("in_hand.png")
     def mouseClicked(self,mousePosX,mousePosY):
         self.platform_list.update(mousePosX,mousePosY)
         win = True
@@ -85,9 +85,11 @@ class Level(object):
 
         # Draw the background
         screen.fill(colors["blue"])
-
-        # Draw all the sprite lists that we have
+        screen.blit(self.background, (0, 0) )
         self.platform_list.draw(screen)
+        screen.blit(self.hand, (457,122))
+        # Draw all the sprite lists that we have
+
 
     def createNode(self, posX, posY, width, height):
         node = Node(posX, posY, width, height)
@@ -96,12 +98,37 @@ class Level(object):
 def gameLoop():
 
     level = Level()
-    level.createNode(50,50,50,50)
-    level.createNode(150,50,50,50)
-    level.createNode(250,50,50,50)
-    level.createNode(350,50,50,50)
-    level.createNode(450,50,50,50)
-
+    level.createNode(463,302,50,50)
+    level.createNode(457,265,50,50)
+    level.createNode(506,272,50,50)
+    level.createNode(497,234,50,50)
+    level.createNode(501,184,50,50)
+    level.createNode(495,150,50,50)
+    level.createNode(543,140,50,50)
+    level.createNode(562,122,50,50)
+    level.createNode(611,126,50,50)
+    level.createNode(560,189,50,50)
+    level.createNode(560,239,50,50)
+    level.createNode(554,286,50,50)
+    level.createNode(528,318,50,50)
+    level.createNode(550,368,50,50)
+    level.createNode(578,417,50,50)
+    level.createNode(566,429,50,50)
+    level.createNode(614,428,50,50)
+    level.createNode(659,399,50,50)
+    level.createNode(666,354,50,50)
+    level.createNode(676,316,50,50)
+    level.createNode(676,270,50,50)
+    level.createNode(656,267,50,50)
+    level.createNode(660,161,50,50)
+    level.createNode(605,176,50,57)
+    level.createNode(602,232,50,50)
+    level.createNode(664,211,50,57)
+    level.createNode(604,278,52,57)
+    level.createNode(600,334,50,57)
+    level.createNode(489,350,50,57)
+    level.createNode(502,406,50,57)
+    level.createNode(529,462,50,15)
     gameExit = False
 
     while not gameExit:
@@ -109,11 +136,13 @@ def gameLoop():
 
 
         for event in pygame.event.get():
+
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 gameExit = True
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # Set the x, y positions of the mouse click
                 x, y = event.pos
+                print(x, y)
                 level.mouseClicked(x,y)
 
 

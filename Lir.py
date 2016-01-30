@@ -1,5 +1,7 @@
-import pygame
+import pygame, os
 import time
+import random
+from pygame.locals import *
 
 pygame.init()
 colors = {"white": (255, 255, 255),
@@ -33,9 +35,20 @@ class Button(pygame.sprite.Sprite):
         super().__init__()
         self.button = button
         self.image = pygame.Surface([width, height])
-        self.image.fill(colors["red"])
-
+        #self.image.fill(colors["red"])
+        #self.up = pygame.image.load("gr_up.png")
+        #self.image = self.up
         self.rect = self.image.get_rect()
+        if self.button == "UP":
+            self.image = pygame.image.load("gr_up.png")
+        elif self.button == "DOWN":
+            self.image = pygame.image.load("gr_down.png")
+        elif self.button == "LEFT":
+            self.image = pygame.image.load("gr_left.png")
+        elif self.button == "RIGHT":
+            self.image = pygame.image.load("gr_right.png")
+
+
         self.rect.x = posX
         self.rect.y = posY
 
@@ -49,7 +62,9 @@ class Triger(pygame.sprite.Sprite):
     def __init__(self,posX,posY,width,height,level):
         super().__init__()
         self.image = pygame.Surface([width, height])
-        self.image.fill(colors["black"])
+        #self.image.fill(colors["black"])
+
+        self.tryChance = 3
 
         self.rect = self.image.get_rect()
         self.rect.x = posX
@@ -57,8 +72,28 @@ class Triger(pygame.sprite.Sprite):
         self.level = level
     def update(self):
         block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
-        for block in block_hit_list:
-            print("Trigger Enter")
+
+        if( len (block_hit_list) != 0):
+            for block in block_hit_list:
+                self.lastButton = block.button
+                #self.checkButton(block.button)
+
+        else:
+            self.lastButton = "NONE"
+
+    def checkButton(self, pressedbutton):
+        print(pressedbutton)
+        if (self.lastButton == "NONE"):
+            return
+        elif pressedbutton == self.lastButton:
+            if self.tryChance < 3 :
+                self.tryChance += 1
+                print(self.tryChance)
+        elif pressedbutton != self.lastButton:
+            self.tryChance -= 1
+            print(self.tryChance)
+            if self.tryChance <= 0:
+                level.lose()
 
 
 
@@ -93,30 +128,42 @@ class Level(object):
         self.platform_list.draw(screen)
 
     def createButton(self, posX, posY, width, height):
-        button = Button(posX, posY, width, height, "UP")
+        type = random.choice(("UP", "DOWN", "LEFT", "RIGHT"))
+        button = Button(posX, posY, width, height, type)
         self.platform_list.add(button)
 
+    def lose(self):
+        print("YOU LOSE!!!!!!!")
 
+level = Level()
 def GameLoop():
 
-    level = Level()
+
     trigger = Triger(100, 50, 100, 100, level)
     gameExit = False
 
     while not gameExit:
 
         for event in pygame.event.get():
+
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 gameExit = True
+
+
             if event.type == pygame.KEYDOWN:
+
                 if event.key == pygame.K_LEFT:
-                    print("LEFT")
+                    pressedbutton = "LEFT"
+                    trigger.checkButton(pressedbutton)
                 elif event.key == pygame.K_RIGHT:
-                    print("RIGHT")
+                    pressedbutton = "RIGHT"
+                    trigger.checkButton(pressedbutton)
                 elif event.key == pygame.K_UP:
-                    print("UP")
+                    pressedbutton = "UP"
+                    trigger.checkButton(pressedbutton)
                 elif event.key == pygame.K_DOWN:
-                    print("DOWN")
+                    pressedbutton = "DOWN"
+                    trigger.checkButton(pressedbutton)
 
         level.update()
         trigger.update()
